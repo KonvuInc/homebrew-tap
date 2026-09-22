@@ -3,8 +3,8 @@ class KonvuTelemetry < Formula
 
   desc "Local-first usage monitor for Claude Code and Codex CLI"
   homepage "https://github.com/KonvuInc/konvu-telemetry"
-  url "https://github.com/KonvuInc/konvu-telemetry/releases/download/v0.2.2/konvu_telemetry-0.2.2.tar.gz"
-  sha256 "49945534b3caea77d53f99a0734c13cd9ce51405e59b4e46d3d44208d312765b"
+  url "https://github.com/KonvuInc/konvu-telemetry/releases/download/v0.2.3/konvu_telemetry-0.2.3.tar.gz"
+  sha256 "bea9c71c3b7bd280e2ce2847eabef5583dc5fe372418cc6cc2b245ede17fa7a6"
   license "MIT"
 
   depends_on "python@3.14"
