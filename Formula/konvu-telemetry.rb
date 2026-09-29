@@ -6,11 +6,26 @@ class KonvuTelemetry < Formula
   url "https://github.com/KonvuInc/konvu-telemetry/releases/download/v0.3.5/konvu_telemetry-0.3.5.tar.gz"
   sha256 "f95a92cf49fed1699a67484184df55df1f7905b74ac13f056a4b47073b9d9291"
   license "MIT"
+  revision 1
 
   depends_on "python@3.14"
 
   def install
     virtualenv_install_with_resources
+    restart_after_upgrade = libexec/"restart-after-upgrade"
+    restart_after_upgrade.write <<~SH
+      #!/bin/sh
+      service="gui/$(/usr/bin/id -u)/com.konvu.telemetry"
+      /bin/launchctl print "$service" >/dev/null 2>&1 || exit 0
+      exec /bin/launchctl kickstart -k "$service"
+    SH
+    restart_after_upgrade.chmod 0755
+  end
+
+  post_install_steps do
+    on_macos do
+      run "restart-after-upgrade", base: :libexec
+    end
   end
 
   def caveats
