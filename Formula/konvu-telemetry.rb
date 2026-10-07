@@ -7,6 +7,7 @@ class KonvuTelemetry < Formula
   sha256 "c44e1c2656490f99bd4ce642e245a1f7eb267844566980c58c26f4c598dc8bfe"
   license "MIT"
 
+  depends_on "rust" => :build # for tiktoken
   depends_on "python@3.14"
 
   resource "certifi" do
@@ -47,15 +48,8 @@ class KonvuTelemetry < Formula
   end
 
   resource "tiktoken" do
-    on_arm do
-      url "https://files.pythonhosted.org/packages/62/85/2ae74575e321148484147e10b53c3b1717c59ebaa9edb4fe18b1f5c055f8/tiktoken-0.14.0-cp314-cp314-macosx_11_0_arm64.whl"
-      sha256 "f2af4a336ea56d6c14f27741a0e1d8294a35dd0b038bcf990d232ebb54eb994b"
-    end
-
-    on_intel do
-      url "https://files.pythonhosted.org/packages/59/b0/1cf129f4af8fc513931f931023def596b7c4bfc77026513cd9d851da9e88/tiktoken-0.14.0-cp314-cp314-macosx_10_15_x86_64.whl"
-      sha256 "e067f4cbcc5d036e8aff7fe7a6b530a8f4de2e4616ad9005a24a1879e24e6450"
-    end
+    url "https://files.pythonhosted.org/packages/66/62/167a842aa0429d45f5e797354fd4343a96f6043d67d0513c675c7b8d36e6/tiktoken-0.14.0.tar.gz"
+    sha256 "231dec90efcdccf1b565a1416107736f1e09b1a08fe736ef9d6363e626d03874"
   end
 
   resource "urllib3" do
@@ -64,8 +58,9 @@ class KonvuTelemetry < Formula
   end
 
   def install
-    venv = virtualenv_install_with_resources(without: %w[regex tiktoken])
-    %w[regex tiktoken].each do |name|
+    # tiktoken builds from source so Homebrew can relink it; a prebuilt wheel has no header room.
+    venv = virtualenv_install_with_resources(without: "regex")
+    %w[regex].each do |name|
       wheel = resource(name)
       wheel.stage { venv.pip_install Pathname.pwd/wheel.downloader.basename }
     end
