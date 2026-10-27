@@ -3,8 +3,8 @@ class KonvuTelemetry < Formula
 
   desc "Local-first usage monitor for Claude Code and Codex CLI"
   homepage "https://github.com/KonvuInc/konvu-telemetry"
-  url "https://github.com/KonvuInc/konvu-telemetry/releases/download/v1.0.3/konvu_telemetry-1.0.3.tar.gz"
-  sha256 "c44e1c2656490f99bd4ce642e245a1f7eb267844566980c58c26f4c598dc8bfe"
+  url "https://github.com/KonvuInc/konvu-telemetry/releases/download/v1.0.4/konvu_telemetry-1.0.4.tar.gz"
+  sha256 "37300344f0a3634d70b1439b0bad76a84d401c0a374923d0a3c4a0bcf7514047"
   license "MIT"
 
   depends_on "rust" => :build # for tiktoken
